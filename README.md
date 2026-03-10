@@ -165,6 +165,58 @@ import { getProvince, Province } from "sri-lanka-division-data";
 const province: Province | undefined = getProvince("Western Province");
 ```
 
+## Publishing to npm
+
+Follow these steps to publish (or update) this package on [npm](https://www.npmjs.com/).
+
+### Prerequisites
+
+1. **Create an npm account** at [npmjs.com/signup](https://www.npmjs.com/signup) if you don't have one.
+2. **Log in** from your terminal:
+   ```bash
+   npm login
+   ```
+
+### Publishing for the First Time
+
+1. **Run the tests** to make sure everything works:
+   ```bash
+   npm test
+   ```
+2. **Publish** the package:
+   ```bash
+   npm publish
+   ```
+
+> **Note:** If the package name is already taken on npm, you can either choose a different name in `package.json` or publish it as a [scoped package](https://docs.npmjs.com/cli/v10/using-npm/scope) (e.g. `@your-username/sri-lanka-division-data`) by updating the `name` field and running `npm publish --access public`.
+
+### Publishing Updates
+
+1. **Bump the version** in `package.json` using one of:
+   ```bash
+   npm version patch   # 1.0.0 → 1.0.1  (bug fixes)
+   npm version minor   # 1.0.0 → 1.1.0  (new features, backward-compatible)
+   npm version major   # 1.0.0 → 2.0.0  (breaking changes)
+   ```
+2. **Run the tests**:
+   ```bash
+   npm test
+   ```
+3. **Publish** the new version:
+   ```bash
+   npm publish
+   ```
+
+### What Gets Published
+
+The `files` field in `package.json` controls which files are included in the published package:
+
+- `index.js` — main module with helper functions
+- `index.d.ts` — TypeScript type definitions
+- `sri-lanka-division-data.json` — the raw data file
+
+Files like tests, `.gitignore`, and `CONTRIBUTING.md` are **not** included in the npm package.
+
 ## Contributing
 
 Contributions are welcome! If you find any typos, missing divisions, or outdated information, please feel free to report an issue or submit a pull request.
