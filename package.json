@@ -1,0 +1,36 @@
+{
+  "name": "sri-lanka-division-data",
+  "version": "1.0.0",
+  "description": "A comprehensive and structured dataset of Sri Lanka's administrative divisions including Provinces, Districts, and Divisional Secretariats with helper functions for easy data access.",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "sri-lanka-division-data.json"
+  ],
+  "scripts": {
+    "test": "node --test"
+  },
+  "keywords": [
+    "sri-lanka",
+    "provinces",
+    "districts",
+    "divisional-secretariats",
+    "administrative-divisions",
+    "location-data",
+    "address-validation",
+    "sri-lanka-data",
+    "geo-data"
+  ],
+  "author": "Sahan Ranasingha",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sahanRanasingha/Sri-Lanka-Division-Data.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sahanRanasingha/Sri-Lanka-Division-Data/issues"
+  },
+  "homepage": "https://github.com/sahanRanasingha/Sri-Lanka-Division-Data#readme"
+}

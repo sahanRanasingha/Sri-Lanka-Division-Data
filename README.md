@@ -5,8 +5,21 @@ A comprehensive and structured JSON dataset of Sri Lanka's administrative divisi
 ## Features
 
 - **Complete Hierarchy**: Covers all 9 Provinces, 25 Districts, and their respective Divisional Secretariats.
-- **Easy to Use**: Provided in a standard, lightweight JSON format.
-- **Open Source**: Free for use in commercial and personal projects.
+- **Easy to Use**: Available as an npm package with built-in helper functions and TypeScript support.
+- **Case-Insensitive Lookups**: All lookup functions are case-insensitive for convenience.
+- **Open Source**: Free for use in commercial and personal projects under the MIT license.
+
+## Installation
+
+```bash
+npm install sri-lanka-division-data
+```
+
+Or, you can clone the repository directly:
+
+```bash
+git clone https://github.com/sahanRanasingha/Sri-Lanka-Division-Data.git
+```
 
 ## Data Structure
 
@@ -36,24 +49,81 @@ The data is organized hierarchically as follows:
     - `name`: Name of the District (e.g., "Colombo").
     - `divisional_secretariats`: Array of strings, listing all Divisional Secretariats in that district (e.g., ["Colombo", "Dehiwala", ...]).
 
-## Usage Examples
+## Usage
 
 ### JavaScript / Node.js
 
-You can simply require or import the JSON file into your project.
-
 ```javascript
-const sriLankaData = require("./sri-lanka-division-data.json");
+const {
+  getProvinces,
+  getDistricts,
+  getDivisionalSecretariats,
+  getProvince,
+  getDistrict,
+  getProvinceOfDistrict,
+  getDistrictOfDivisionalSecretariat,
+} = require("sri-lanka-division-data");
 
-// Get all provinces
-const provinces = sriLankaData.provinces.map((p) => p.name);
-console.log(provinces);
+// Get all province names
+console.log(getProvinces());
+// ['Northern Province', 'North Western Province', 'Western Province', ...]
 
 // Get districts in Western Province
-const westernDistricts = sriLankaData.provinces
-  .find((p) => p.name === "Western Province")
-  .districts.map((d) => d.name);
-console.log(westernDistricts);
+console.log(getDistricts("Western Province"));
+// ['Colombo', 'Gampaha', 'Kalutara']
+
+// Get all district names across all provinces
+console.log(getDistricts());
+// ['Jaffna', 'Kilinochchi', ..., 'Matara', 'Hambantota']
+
+// Get divisional secretariats for Colombo district
+console.log(getDivisionalSecretariats("Colombo"));
+// ['Colombo', 'Dehiwala', 'Homagama', ...]
+
+// Get a full province object
+const western = getProvince("Western Province");
+console.log(western.districts.length); // 3
+
+// Get a full district object
+const colombo = getDistrict("Colombo");
+console.log(colombo.divisional_secretariats);
+
+// Find which province a district belongs to
+console.log(getProvinceOfDistrict("Colombo"));
+// 'Western Province'
+
+// Find which district a divisional secretariat belongs to
+console.log(getDistrictOfDivisionalSecretariat("Dehiwala"));
+// 'Colombo'
+```
+
+### ES Modules
+
+```javascript
+import {
+  getProvinces,
+  getDistricts,
+  getDivisionalSecretariats,
+} from "sri-lanka-division-data";
+```
+
+### Direct Data Access
+
+You can also access the raw data directly:
+
+```javascript
+const { provinces } = require("sri-lanka-division-data");
+
+// provinces is the raw array of province objects
+provinces.forEach((province) => {
+  console.log(province.name);
+});
+```
+
+Or import just the JSON file:
+
+```javascript
+const data = require("sri-lanka-division-data/sri-lanka-division-data.json");
 ```
 
 ### Python
@@ -70,12 +140,29 @@ for province in data['provinces']:
         print(f"District: {district['name']}")
 ```
 
-## Installation
+## API Reference
 
-You can use this data by cloning the repository or downloading the JSON file directly.
+All lookup functions are **case-insensitive**.
 
-```bash
-git clone https://github.com/sahanRanasingha/Sri-Lanka-Division-Data.git
+| Function | Parameters | Returns | Description |
+|---|---|---|---|
+| `getAllData()` | — | `object` | Returns the full data object with all provinces, districts, and divisional secretariats. |
+| `getProvinces()` | — | `string[]` | Returns an array of all province names. |
+| `getDistricts(provinceName?)` | `provinceName` *(optional)* | `string[]` | Returns district names. If a province name is given, returns only its districts. |
+| `getDivisionalSecretariats(districtName?)` | `districtName` *(optional)* | `string[]` | Returns divisional secretariat names. If a district name is given, returns only its secretariats. |
+| `getProvince(name)` | `name` | `object \| undefined` | Returns the full province object, or `undefined` if not found. |
+| `getDistrict(name)` | `name` | `object \| undefined` | Returns the full district object, or `undefined` if not found. |
+| `getProvinceOfDistrict(districtName)` | `districtName` | `string \| undefined` | Returns the province name for a given district. |
+| `getDistrictOfDivisionalSecretariat(dsName)` | `dsName` | `string \| undefined` | Returns the district name for a given divisional secretariat. |
+
+## TypeScript
+
+This package includes TypeScript type definitions. Types are available for `Province`, `District`, and `SriLankaDivisionData`.
+
+```typescript
+import { getProvince, Province } from "sri-lanka-division-data";
+
+const province: Province | undefined = getProvince("Western Province");
 ```
 
 ## Contributing
